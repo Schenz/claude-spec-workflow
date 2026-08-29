@@ -22,13 +22,13 @@ investigation that found it. One line; a short paragraph only where a sentence g
 cannot carry it. More than that means the item is too big.}
 
 **Acceptance Criteria**  
-GIVEN {precondition}
-WHEN {action}
-THEN {checkable outcome}
+GIVEN {precondition} 
+WHEN {action} 
+THEN {checkable outcome} 
 
-GIVEN {precondition}
-WHEN {action}
-THEN {checkable outcome}
+GIVEN {precondition} 
+WHEN {action} 
+THEN {checkable outcome} 
 
 **Estimate**  
 {In the unit from `.claude/workflow-config.md`. If it exceeds the ceiling, split the item
