@@ -11,28 +11,28 @@
 -->
 
 **Title**
-<One line. If it needs an "and", consider splitting the item.>
+{One line. If it needs an "and", consider splitting the item.}
 
 **Description**
-As a <role>, I want <capability> so that <outcome>
+As a {role}, I want {capability} so that {outcome}
 
 **Proposed Fix**
-<What and where. Not how. Name the file, the symptom, or the surface — do not restage the
+{What and where. Not how. Name the file, the symptom, or the surface — do not restage the
 investigation that found it. One line; a short paragraph only where a sentence genuinely
-cannot carry it. More than that means the item is too big.>
+cannot carry it. More than that means the item is too big.}
 
 **Acceptance Criteria**
-GIVEN <precondition>
-WHEN <action>
-THEN <checkable outcome>
+GIVEN {precondition}
+WHEN {action}
+THEN {checkable outcome}
 
-GIVEN <precondition>
-WHEN <action>
-THEN <checkable outcome>
+GIVEN {precondition}
+WHEN {action}
+THEN {checkable outcome}
 
 **Estimate**
-<In the unit from .claude/workflow-config.md. If it exceeds the ceiling, split the item
-rather than raising the estimate.>
+{In the unit from `.claude/workflow-config.md`. If it exceeds the ceiling, split the item
+rather than raising the estimate.}
 
 <!--
   Acceptance criteria checklist:
