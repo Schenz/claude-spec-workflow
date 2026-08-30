@@ -25,12 +25,16 @@ and Claude Code with the `superpowers` plugin installed.
 ## The shape of the thing
 
 Work moves through four artifacts, each produced by its own skill, each a narrowing of the
-last. They live in a per-item spec folder — `specs/{itemId}/` — which is **gitignored**.
+last. Delivery starts from an official tracker item. If work is discovered ad hoc, capture
+it with `write-story` and file it in your tracker first. The artifacts live in a per-item
+spec folder — `specs/{itemId}/` — which is **gitignored**.
 
 ```mermaid
 flowchart TD
-  A[tracker work item] --> P[plan-with-spec]
-  U[write-story optional upstream source] -.-> A
+  U[work found outside tracker] --> S[write-story]
+  S --> F[file item in tracker]
+  F --> A[tracker work item]
+  A --> P[plan-with-spec]
   R[recall]
   P -. calls .-> R
 
@@ -63,7 +67,7 @@ flowchart TD
   D5 -- yes --> D6{resolution path}
 
   D6 -- fix now --> M[implement fix manually or via address-comments]
-  D6 -- debt must be documented --> W[write-story debt draft]
+  D6 -- debt must be documented --> W[write-story debt item then file to tracker]
 
   M --> D5
   W --> D5
@@ -80,7 +84,8 @@ Two skills sit outside the line and are invoked by the others:
   traps. You rarely invoke it by hand.
 - **`write-story`** — the single definition of the work-item format. `compound` calls it
   for work that its findings imply; you call it directly whenever you find something that
-  needs capturing but does not belong in the current item.
+  needs capturing but does not belong in the current item. File that item into your
+  tracker before it enters the planning ladder.
 
 Plus three support skills: `version-control`, `e2e-verification`, and whatever domain
 skills your repo grows (see `skills/DOMAIN-SKILL-TEMPLATE.md`).
@@ -179,8 +184,8 @@ articles must never cite a spec path, and why `compound` exists at all.
 
 ```mermaid
 flowchart LR
-  S[specs item-id folder] -->|gitignored| S1[working material per item; disposable]
-  K[docs knowledge folder] -->|committed| K1[durable project knowledge; indexed]
+  S[specs/#123;itemId#125;/] -->|gitignored| S1[working material per item; disposable]
+  K[docs/knowledge/] -->|committed| K1[durable project knowledge; indexed]
   R[scratch dir outside repo] -->|not tracked| R1[story drafts and tracker payloads; narrative prose; not code-reviewed]
 ```
 
