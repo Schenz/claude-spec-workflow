@@ -20,7 +20,7 @@ flowchart TD
   B -->|product or service with tracked work and PR review| C[adopt whole pack]
   B -->|library or shared component with light planning| D[adopt ladder and review skills]
   B -->|scripts tooling one-off analysis| E[adopt version-control and write-story only]
-  B -->|infrastructure as code| F[adopt whole pack and emphasize DoD table]
+  B -->|LLM skill workflow template| F[adopt whole pack and emphasize DoD table]
 ```
 
 | Repo shape | Take |
@@ -28,7 +28,7 @@ flowchart TD
 | Product or service with tracked work items and PR review | The whole pack |
 | Library or shared component, reviewed but lightly planned | Ladder + review skills; skip `e2e-verification` |
 | Scripts, tooling, one-off analysis | `version-control` and `write-story` only. No spec folders. |
-| Infrastructure-as-code | Whole pack, but the DoD table matters more than the test command |
+| LLM skill workflow template | Whole pack, but the DoD table matters more than the test command |
 
 If you take a subset, record the decision in the repo's `CLAUDE.md` so the next person does
 not read the absence as an oversight.
