@@ -9,11 +9,13 @@ neither requires clicking through a web UI.
 
 Drafting is judgment; filing is mechanics.
 
-```
-finding ──► write-story ──► draft file (scratch dir, outside the repo)
-                                │
-                                ▼
-                          payload files ──► apply, dry-run first ──► tracker
+```mermaid
+flowchart LR
+  A[finding] --> B[write-story]
+  B --> C[draft file in scratch directory]
+  C --> D[payload files]
+  D --> E[apply payloads dry-run first]
+  E --> F[tracker]
 ```
 
 Keeping them apart means you can draft with no tracker configured at all, review a batch of
@@ -37,10 +39,12 @@ authenticated is better in every respect.
 
 **The single most useful rule here.**
 
-```
-1. a comment      deletable, burns no id — use it to prove write access
-2. a create       consumes an id permanently; deletion usually only recycle-bins
-3. an update      touches something that already exists and has history
+```mermaid
+flowchart LR
+  A[comment] --> B[create] --> C[update]
+  A1[deletable and burns no id] -. rationale .-> A
+  B1[consumes an id permanently] -. rationale .-> B
+  C1[changes existing tracked history] -. rationale .-> C
 ```
 
 Prove access with a comment first. If credentials or field validation are wrong, you find out on

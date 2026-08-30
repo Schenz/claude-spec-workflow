@@ -25,37 +25,56 @@ and Claude Code with the `superpowers` plugin installed.
 ## The shape of the thing
 
 Work moves through four artifacts, each produced by its own skill, each a narrowing of the
-last. They live in a per-item spec folder — `specs/{itemId}/` — which is **gitignored**.
+last. Delivery starts from an official tracker item. If work is discovered ad hoc, capture
+it with `write-story` and file it in your tracker first. The artifacts live in a per-item
+spec folder — `specs/{itemId}/` — which is **gitignored**.
 
-```
-  tracker work item  ──or──  a draft from write-story (work found, not yet filed)
-        │
-        ▼
-  plan-with-spec ──────────────────►  specs/{itemId}/PLAN.md
-        │                              why, and how much. Scope decisions and
-        │                              acceptance criteria. NOT steps.
-        │                              Calls recall first.
-        ▼
-  plan-to-implementation-guide ────►  specs/{itemId}/IMPLEMENTATION_GUIDE.md
-        │                              how. Per item: goal, approach, files,
-        │                              effort, checklist, definition of done.
-        ▼
-  implementation-guide-to-tasks ───►  specs/{itemId}/TASKS.md
-        │                              in what order, verified how, undone how.
-        ▼
-  execute-task-checklist ×N ───────►  code, tests, one commit per task
-        │                              strict order; stop on first failure.
-        ▼
-  pre-pr-review ───────────────────►  specs/{itemId}/PRE_PR_REVIEW.md
-        │                              verification matrix + known-trap sweep.
-        ▼
-  address-comments ×N ─────────────►  one comment, one fix, one commit
-        │
-        ▼
-  compound ────────────────────────►  docs/knowledge/YYYY-MM-DD-<slug>.md
-        │                              and again once real-world evidence lands.
-        ▼
-  pr-description ──────────────────►  specs/{itemId}/PR_DESCRIPTION.md
+```mermaid
+flowchart TD
+  U[work found outside tracker] --> S[write-story]
+  S --> F[file item in tracker]
+  F --> A[tracker work item]
+  A --> P[plan-with-spec]
+  R[recall]
+  P -. calls .-> R
+
+  P --> P1[PLAN.md]
+  P1 --> D1{PLAN approved}
+  D1 -- no --> P2[revise PLAN.md manually or with LLM]
+  P2 --> D1
+  D1 -- yes --> G[plan-to-implementation-guide]
+
+  G --> G1[IMPLEMENTATION_GUIDE.md]
+  G1 --> D2{IMPLEMENTATION_GUIDE approved}
+  D2 -- no --> G2[revise IMPLEMENTATION_GUIDE.md manually or with LLM]
+  G2 --> D2
+  D2 -- yes --> T[implementation-guide-to-tasks]
+
+  T --> T1[TASKS.md]
+  T1 --> D3{TASKS approved}
+  D3 -- no --> T2[revise TASKS.md manually or with LLM]
+  T2 --> D3
+  D3 -- yes --> X[execute-task-checklist by task ID]
+
+  X --> D4{all task IDs complete}
+  D4 -- no --> X
+  D4 -- yes --> V[pre-pr-review]
+  V -. calls .-> R
+
+  V --> V1[PRE_PR_REVIEW.md]
+  V1 --> D5{review items remaining}
+  D5 -- no --> C[compound]
+  D5 -- yes --> D6{resolution path}
+
+  D6 -- fix now --> M[implement fix manually or via address-comments]
+  D6 -- debt must be documented --> W[write-story debt item then file to tracker]
+
+  M --> D5
+  W --> D5
+
+  C --> C1[knowledge articles confirmed]
+  C1 --> PR[pr-description]
+  PR --> PR1[PR_DESCRIPTION.md]
 ```
 
 Two skills sit outside the line and are invoked by the others:
@@ -65,7 +84,8 @@ Two skills sit outside the line and are invoked by the others:
   traps. You rarely invoke it by hand.
 - **`write-story`** — the single definition of the work-item format. `compound` calls it
   for work that its findings imply; you call it directly whenever you find something that
-  needs capturing but does not belong in the current item.
+  needs capturing but does not belong in the current item. File that item into your
+  tracker before it enters the planning ladder.
 
 Plus three support skills: `version-control`, `e2e-verification`, and whatever domain
 skills your repo grows (see `skills/DOMAIN-SKILL-TEMPLATE.md`).
@@ -162,11 +182,11 @@ spec folder is readable by anyone else.** What survives is the tracked code, the
 items, and `docs/knowledge/`. That is why traceability lives in commits, why knowledge
 articles must never cite a spec path, and why `compound` exists at all.
 
-```
-specs/{itemId}/     gitignored   working material, per item, disposable
-docs/knowledge/     committed    durable project knowledge, indexed
-<scratch dir>       outside repo story drafts and tracker payloads — narrative
-                                 prose that should never be reviewed as code
+```mermaid
+flowchart LR
+  S[specs/#123;itemId#125;/] -->|gitignored| S1[working material per item; disposable]
+  K[docs/knowledge/] -->|committed| K1[durable project knowledge; indexed]
+  R[scratch dir outside repo] -->|not tracked| R1[story drafts and tracker payloads; narrative prose; not code-reviewed]
 ```
 
 ## Knowledge, in one page

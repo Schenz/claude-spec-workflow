@@ -14,12 +14,21 @@ about what the test command is.
 Be honest here. The four-rung ladder pays for itself on work that is planned, reviewed and
 merged by more than one person. It is ceremony on a scratch repo.
 
+```mermaid
+flowchart TD
+  A[repo shape] --> B{which shape}
+  B -->|product or service with tracked work and PR review| C[adopt whole pack]
+  B -->|library or shared component with light planning| D[adopt ladder and review skills]
+  B -->|scripts tooling one-off analysis| E[adopt version-control and write-story only]
+  B -->|LLM skill workflow template| F[adopt whole pack and emphasize DoD table]
+```
+
 | Repo shape | Take |
 |---|---|
 | Product or service with tracked work items and PR review | The whole pack |
 | Library or shared component, reviewed but lightly planned | Ladder + review skills; skip `e2e-verification` |
 | Scripts, tooling, one-off analysis | `version-control` and `write-story` only. No spec folders. |
-| Infrastructure-as-code | Whole pack, but the DoD table matters more than the test command |
+| LLM skill workflow template | Whole pack, but the DoD table matters more than the test command |
 
 If you take a subset, record the decision in the repo's `CLAUDE.md` so the next person does
 not read the absence as an oversight.
@@ -172,6 +181,15 @@ worked example of it.
 Take a genuinely small item through the whole chain: `plan-with-spec` →
 `plan-to-implementation-guide` → `implementation-guide-to-tasks` →
 `execute-task-checklist` → `pre-pr-review` → `pr-description`.
+
+```mermaid
+flowchart LR
+  A[plan-with-spec] --> B[plan-to-implementation-guide]
+  B --> C[implementation-guide-to-tasks]
+  C --> D[execute-task-checklist]
+  D --> E[pre-pr-review]
+  E --> F[pr-description]
+```
 
 You are testing the config, not the item. Watch for:
 
